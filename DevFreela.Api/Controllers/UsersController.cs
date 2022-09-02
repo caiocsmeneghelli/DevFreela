@@ -11,6 +11,11 @@ namespace DevFreela.Api.Controllers
     [Route("api/users")]
     public class UsersController : ControllerBase
     {
+        public UsersController(ExempleClass exempleClass)
+        {
+            
+        }
+
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
