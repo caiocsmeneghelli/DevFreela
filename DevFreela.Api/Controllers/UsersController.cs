@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DevFreela.Api.Models;
+using DevFreela.Application.Services.Interfaces;
+using DevFreela.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevFreela.Api.Controllers
@@ -11,23 +13,25 @@ namespace DevFreela.Api.Controllers
     [Route("api/users")]
     public class UsersController : ControllerBase
     {
-        public UsersController(ExempleClass exempleClass)
-        {
-            
-        }
+        private readonly IUserService _userService;
 
+        public UsersController(IUserService userService)
+        {
+            _userService = userService;
+        }
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            return Ok();
+            var user = _userService.GetById(id);
+            return Ok(user);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] CreateUserModel creatUserModel)
+        public IActionResult Post([FromBody] CreateUserViewModel inputModel)
         {
-            return CreatedAtAction(nameof(GetById), new { id = 1 }, creatUserModel);
+            var idUser = _userService.Create(inputModel);
+            return CreatedAtAction(nameof(GetById), new { id = idUser }, inputModel);
         }
-
         // api/users/1/login
         [HttpPut("{id}/login")]
         public IActionResult Login(int id, [FromBody] LoginModel loginModel)
