@@ -36,6 +36,7 @@ namespace DevFreela.Api.Controllers
         [HttpPut("{id}/login")]
         public IActionResult Login(int id, [FromBody] LoginModel loginModel)
         {
+            // Sera feito no modulo de autenticacao
             return NoContent();
         }
     }
