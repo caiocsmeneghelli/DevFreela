@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using DevFreela.Core.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -21,47 +22,12 @@ namespace DevFreela.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Project>()
-                .HasKey(reg => reg.Id);
+            // Busca classes herdadas de IEntityTypeConfiguration<T>
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-            // Modelo abaixo para tratar um tipo de relacionamento 1:N
-            modelBuilder.Entity<Project>()
-                .HasOne(reg => reg.Freelancer)
-                .WithMany(reg => reg.FreelanceProjects)
-                .HasForeignKey(reg => reg.IdFreelancer)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Project>()
-                .HasOne(reg => reg.Client)
-                .WithMany(reg => reg.OwnedProjects)
-                .HasForeignKey(reg => reg.IdCliente)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<ProjectComment>()
-                .HasKey(reg => reg.Id);
-
-            modelBuilder.Entity<ProjectComment>()
-                .HasOne(reg => reg.Project)
-                .WithMany(reg => reg.Comments)
-                .HasForeignKey(reg => reg.IdProject);
-
-            modelBuilder.Entity<ProjectComment>()
-                .HasOne(reg => reg.User)
-                .WithMany(reg => reg.Comments)
-                .HasForeignKey(reg => reg.IdUser);
-
+            
             modelBuilder.Entity<Skill>()
-                .HasKey(reg => reg.Id);
-
-            modelBuilder.Entity<User>()
-                .HasKey(reg => reg.Id);
-
-            // Modelo abaixo para tratar um tipo de relacionamento N:1
-            modelBuilder.Entity<User>()
-                .HasMany(reg => reg.Skills)
-                .WithOne()
-                .HasForeignKey(reg => reg.IdSkill)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasKey(reg => reg.Id);          
 
             modelBuilder.Entity<UserSkill>()
                 .HasKey(reg => reg.Id);
