@@ -25,7 +25,6 @@ namespace DevFreela.Infrastructure.Persistence
             // Busca classes herdadas de IEntityTypeConfiguration<T>
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-            
             modelBuilder.Entity<Skill>()
                 .HasKey(reg => reg.Id);          
 
