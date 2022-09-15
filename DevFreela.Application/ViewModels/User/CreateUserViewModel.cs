@@ -7,7 +7,7 @@ namespace DevFreela.Application.ViewModels
 {
     public class CreateUserViewModel
     {
-        public string FullName { get; private set; }
+        public string FullName { get; set; }
         public string Email { get; set; }
         public DateTime Birthdate { get; set; }
     }
