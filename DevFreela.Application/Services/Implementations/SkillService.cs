@@ -22,6 +22,7 @@ namespace DevFreela.Application.Services.Implementations
             _connectionString = configuration.GetConnectionString("DevFreelaCs");
         }
 
+        // Usando Dapper
         public List<SkillViewModel> GetAll()
         {
             using(var sqlConnection = new SqlConnection(_connectionString)){

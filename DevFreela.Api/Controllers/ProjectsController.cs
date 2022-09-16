@@ -1,6 +1,8 @@
 using DevFreela.Api.Models;
+using DevFreela.Application.Commands.CreateProject;
 using DevFreela.Application.Services.Interfaces;
 using DevFreela.Application.ViewModels;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -10,10 +12,12 @@ namespace DevFreela.Api.Controllers
     public class ProjectsController : ControllerBase
     {
         private readonly IProjectService _projectService;
+        private readonly IMediator _mediator;
 
-        public ProjectsController(IProjectService projectService)
+        public ProjectsController(IProjectService projectService, IMediator mediator)
         {
             _projectService = projectService;
+            _mediator = mediator;
         }
 
         [HttpGet]
@@ -32,13 +36,14 @@ namespace DevFreela.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]NewProjectInputModel  inputModel)
+        public async Task<IActionResult> Post([FromBody]CreateProjectCommand inputModel)
         {
             if (inputModel.Title.Length > 50)
             {
                 return BadRequest();
             }
-            var idProject = _projectService.Create(inputModel);
+
+            var idProject = await _mediator.Send(inputModel);
 
             return CreatedAtAction(nameof(GetById), new { id = idProject }, inputModel);
         }
