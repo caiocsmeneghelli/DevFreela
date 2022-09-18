@@ -6,9 +6,8 @@ using DevFreela.Core.Entities;
 
 namespace DevFreela.Core.Repositories
 {
-    public interface IProjectRepository
+    public interface IUserRepository
     {
-        Task<List<Project>> GetAllAsync();
-        Task<Project> GetByIdAsync(int id);
+        Task<User> GetUserByIdAsync(int id);
     }
 }
