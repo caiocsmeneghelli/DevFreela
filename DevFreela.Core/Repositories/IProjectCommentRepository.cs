@@ -6,9 +6,8 @@ using DevFreela.Core.Entities;
 
 namespace DevFreela.Core.Repositories
 {
-    public interface IUserRepository
+    public interface IProjectCommentRepository
     {
-        Task<User> GetUserByIdAsync(int id);
-        Task<int> AddAsync(User user);
+        Task AddAsync(ProjectComment projectComment);
     }
 }
