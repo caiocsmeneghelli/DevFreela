@@ -17,6 +17,11 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
             _dbContext = dbContext;
         }
 
+        public Task<int> AddAsync(User user)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<User> GetUserByIdAsync(int id)
         {
             var user = await _dbContext.Users.SingleOrDefaultAsync(reg => reg.Id == id);
