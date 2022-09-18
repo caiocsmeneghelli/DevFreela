@@ -1,6 +1,8 @@
 using DevFreela.Api.Models;
 using DevFreela.Application.Commands.CreateComment;
 using DevFreela.Application.Commands.CreateProject;
+using DevFreela.Application.Queries.GetAllProjects;
+using DevFreela.Application.Queries.GetProjectById;
 using DevFreela.Application.Services.Interfaces;
 using DevFreela.Application.ViewModels;
 using MediatR;
@@ -22,16 +24,18 @@ namespace DevFreela.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(string query)
+        public async  Task<IActionResult> Get(string query)
         {
-            var projects = _projectService.GetAll(query);
+            var model = new GetAllProjectsQuery(query);
+            var projects = await _mediator.Send(model);
             return Ok(projects);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var project = _projectService.GetById(id);
+            var inputModel = new GetProjectByIdQuery(id);
+            var project = await _mediator.Send(inputModel);
             if (project is null) { return NotFound(); }
             return Ok(project);
         }
