@@ -16,6 +16,7 @@ using Microsoft.Extensions.Options;
 namespace DevFreela.Api.Controllers
 {
     [Route("api/projects")]
+    [ApiController]
     public class ProjectsController : ControllerBase
     {
         private readonly IProjectService _projectService;
@@ -47,9 +48,13 @@ namespace DevFreela.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]CreateProjectCommand inputModel)
         {
-            if (inputModel.Title.Length > 50)
+             if(!ModelState.IsValid)
             {
-                return BadRequest();
+                var messages = ModelState
+                    .SelectMany(reg => reg.Value.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList();
+                return BadRequest(messages);
             }
 
             var idProject = await _mediator.Send(inputModel);
