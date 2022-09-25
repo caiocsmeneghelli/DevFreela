@@ -20,7 +20,7 @@ namespace DevFreela.Application.Services.Implementations
 
         public int Create(CreateUserViewModel model)
         {
-            var user = new User(model.FullName, model.Email, model.Birthdate);
+            var user = new User(model.FullName, model.Email, model.Birthdate, model.Password, model.Role);
             _dbContext.Users.Add(user);
             _dbContext.SaveChanges();
             return user.Id;

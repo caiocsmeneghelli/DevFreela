@@ -1,4 +1,3 @@
-using DevFreela.Api.Models;
 using DevFreela.Application.Commands.CreateComment;
 using DevFreela.Application.Commands.CreateProject;
 using DevFreela.Application.Commands.DeleteProject;
@@ -8,10 +7,8 @@ using DevFreela.Application.Commands.UpdateProject;
 using DevFreela.Application.Queries.GetAllProjects;
 using DevFreela.Application.Queries.GetProjectById;
 using DevFreela.Application.Services.Interfaces;
-using DevFreela.Application.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 
 namespace DevFreela.Api.Controllers
 {
@@ -48,15 +45,6 @@ namespace DevFreela.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]CreateProjectCommand inputModel)
         {
-             if(!ModelState.IsValid)
-            {
-                var messages = ModelState
-                    .SelectMany(reg => reg.Value.Errors)
-                    .Select(e => e.ErrorMessage)
-                    .ToList();
-                return BadRequest(messages);
-            }
-
             var idProject = await _mediator.Send(inputModel);
 
             return CreatedAtAction(nameof(GetById), new { id = idProject }, inputModel);
