@@ -1,4 +1,5 @@
 using DevFreela.Application.ViewModels;
+using DevFreela.Core.Repositories;
 using DevFreela.Infrastructure.Persistence;
 using DevFreela.Infrastructure.Persistence.Repositories;
 using MediatR;
@@ -8,9 +9,9 @@ namespace DevFreela.Application.Queries.GetAllProjects
 {
     public class GetAllProjectsQueryHandler : IRequestHandler<GetAllProjectsQuery, List<ProjectViewModel>>
     {
-        private readonly ProjectRepository _projectRepository;
+        private readonly IProjectRepository _projectRepository;
 
-        public GetAllProjectsQueryHandler(ProjectRepository projectRepository)
+        public GetAllProjectsQueryHandler(IProjectRepository projectRepository)
         {
             _projectRepository = projectRepository;
         }
