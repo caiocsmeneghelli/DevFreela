@@ -11,6 +11,8 @@ using FluentValidation.AspNetCore;
 using DevFreela.Application.Validators;
 using FluentValidation;
 using DevFreela.Api.Filters;
+using DevFreela.Infrastructure.AuthServices;
+using DevFreela.Core.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +35,7 @@ builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ISkillRepository, SkillRepository>();
 builder.Services.AddScoped<IProjectCommentRepository, ProjectCommentRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 
 builder.Services.Configure<OpeningTimeOption>(builder.Configuration.GetSection("OpeningTime"));
