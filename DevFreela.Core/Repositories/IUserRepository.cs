@@ -10,5 +10,6 @@ namespace DevFreela.Core.Repositories
     {
         Task<User> GetUserByIdAsync(int id);
         Task<int> AddAsync(User user);
+        Task<User> GetUserByEmailAndPasswordAsync(string email, string passwordHash);
     }
 }

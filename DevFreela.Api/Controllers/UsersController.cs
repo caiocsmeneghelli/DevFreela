@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DevFreela.Api.Models;
 using DevFreela.Application.Commands.CreateUser;
+using DevFreela.Application.Commands.LoginUser;
 using DevFreela.Application.Queries.GetUserById;
 using DevFreela.Application.Services.Interfaces;
 using DevFreela.Application.ViewModels;
@@ -36,15 +37,19 @@ namespace DevFreela.Api.Controllers
         public async Task<IActionResult> Post([FromBody] CreateUserCommand inputModel)
         {
             var idUser = await _mediator.Send(inputModel);
-            
+
             return CreatedAtAction(nameof(GetById), new { id = idUser }, inputModel);
         }
         // api/users/1/login
-        [HttpPut("{id}/login")]
-        public IActionResult Login(int id, [FromBody] LoginModel loginModel)
+        [HttpPut("login")]
+        public async Task<IActionResult> Login([FromBody] LoginUserCommand command)
         {
-            // Sera feito no modulo de autenticacao
-            return NoContent();
+            var loginUserViewModel = await _mediator.Send(command);
+            if (loginUserViewModel == null)
+            {
+                return BadRequest();
+            }
+            return Ok(loginUserViewModel);
         }
     }
 }

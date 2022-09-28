@@ -17,9 +17,17 @@ namespace DevFreela.Infrastructure.Persistence.Repositories
             _dbContext = dbContext;
         }
 
-        public Task<int> AddAsync(User user)
+        public async Task<int> AddAsync(User user)
         {
-            throw new NotImplementedException();
+            _dbContext.Users.AddAsync(user);
+            return user.Id;
+        }
+
+        public async Task<User> GetUserByEmailAndPasswordAsync(string email, string passwordHash)
+        {
+            return await _dbContext
+                .Users
+                .SingleOrDefaultAsync(reg => reg.Email == email && reg.Password == passwordHash);
         }
 
         public async Task<User> GetUserByIdAsync(int id)
