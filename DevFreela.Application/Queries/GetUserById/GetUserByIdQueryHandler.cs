@@ -18,7 +18,7 @@ namespace DevFreela.Application.Queries.GetUserById
         public async Task<UserViewModel> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetUserByIdAsync(request.Id);
-            if (user is null) { return null; }
+            if (user == null) { return null; }
             return new UserViewModel(user.FullName, user.Email, user.Birthdate, user.Active);
         }
     }
