@@ -8,12 +8,15 @@ using DevFreela.Application.Queries.GetAllProjects;
 using DevFreela.Application.Queries.GetProjectById;
 using DevFreela.Application.Services.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DevFreela.Api.Controllers
 {
     [Route("api/projects")]
     [ApiController]
+    // Authorize para solicitar pelo menos a autenticacao
+    // [Authorize]
     public class ProjectsController : ControllerBase
     {
         private readonly IProjectService _projectService;
@@ -26,6 +29,7 @@ namespace DevFreela.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "client, freelancer")]
         public async Task<IActionResult> Get(string query)
         {
             var model = new GetAllProjectsQuery(query);
@@ -34,6 +38,7 @@ namespace DevFreela.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "client, freelancer")]
         public async Task<IActionResult> GetById(int id)
         {
             var inputModel = new GetProjectByIdQuery(id);
@@ -43,6 +48,7 @@ namespace DevFreela.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "client")]
         public async Task<IActionResult> Post([FromBody]CreateProjectCommand inputModel)
         {
             var idProject = await _mediator.Send(inputModel);
@@ -51,6 +57,7 @@ namespace DevFreela.Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "client")]
         public async Task<IActionResult> Put(int id, [FromBody]UpdateProjectCommand inputModel)
         {
             if (inputModel.Description.Length > 200)
@@ -63,6 +70,7 @@ namespace DevFreela.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "client")]
         public async Task<IActionResult> Delete(int id)
         {
             var inputModel = new DeleteProjectCommand(id);
@@ -72,6 +80,7 @@ namespace DevFreela.Api.Controllers
 
         // api/projects/1/comments POST
         [HttpPost("{id}/comments")]
+        [Authorize(Roles = "client, freelancer")]
         public async Task<IActionResult> PostComment(int id, [FromBody] CreateCommentCommand inputModel)
         {
             // _projectService.CreateComment(inputModel);
@@ -81,6 +90,7 @@ namespace DevFreela.Api.Controllers
 
         // api/projects/1/start
         [HttpPut("{id}/start")]
+        [Authorize(Roles = "client")]
         public async Task<IActionResult> Start(int id)
         {
             var inputModel = new StartProjectCommand(id);
@@ -90,6 +100,7 @@ namespace DevFreela.Api.Controllers
 
         // api/projects/1/finish
         [HttpPut("{id}/finish")]
+        [Authorize(Roles = "client")]
         public async Task<IActionResult> Finish(int id)
         {
             var inputModel = new FinishProjectCommand(id);
