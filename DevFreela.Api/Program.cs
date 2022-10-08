@@ -54,7 +54,20 @@ builder.Services.AddSwaggerGen(c => {
         In = ParameterLocation.Header,
         Description = "JWT Authorization header usando esquema Bearer."
     });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement{
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference{
+                    Type = ReferenceType.SecurityScheme,
+                    Id= "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
 });
+
 builder.Services.AddMediatR(typeof(CreateProjectCommand));
 
 
