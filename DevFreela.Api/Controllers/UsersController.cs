@@ -40,7 +40,7 @@ namespace DevFreela.Api.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = idUser }, inputModel);
         }
-        // api/users/1/login
+        // api/users/login
         [HttpPut("login")]
         public async Task<IActionResult> Login([FromBody] LoginUserCommand command)
         {
