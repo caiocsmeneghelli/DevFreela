@@ -9,16 +9,16 @@ using MediatR;
 
 namespace DevFreela.Application.Commands.CreateComment
 {
-    public class CreateCommandCommandHandler : IRequestHandler<CreateCommentCommand, Unit>
+    public class CreateProjectCommentCommandHandler : IRequestHandler<CreateProjectCommentCommand, Unit>
     {
         private readonly IProjectCommentRepository _projectCommentRepository;
 
-        public CreateCommandCommandHandler(IProjectCommentRepository projectCommentRepository)
+        public CreateProjectCommentCommandHandler(IProjectCommentRepository projectCommentRepository)
         {
             _projectCommentRepository = projectCommentRepository;
         }
 
-        public async Task<Unit> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateProjectCommentCommand request, CancellationToken cancellationToken)
         {
             var comment = new ProjectComment(
                 request.Content,

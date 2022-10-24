@@ -7,7 +7,7 @@ using MediatR;
 namespace DevFreela.Application.Commands.CreateComment
 {
     // Unit para void
-    public class CreateCommentCommand : IRequest<Unit>
+    public class CreateProjectCommentCommand : IRequest<Unit>
     {
         public string Content { get; set; }
         public int IdUser { get; set; }
