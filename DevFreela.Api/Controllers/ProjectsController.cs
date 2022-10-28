@@ -81,7 +81,7 @@ namespace DevFreela.Api.Controllers
         // api/projects/1/comments POST
         [HttpPost("{id}/comments")]
         [Authorize(Roles = "client, freelancer")]
-        public async Task<IActionResult> PostComment(int id, [FromBody] CreateCommentCommand inputModel)
+        public async Task<IActionResult> PostComment(int id, [FromBody] CreateProjectCommentCommand inputModel)
         {
             // _projectService.CreateComment(inputModel);
             await _mediator.Send(inputModel);

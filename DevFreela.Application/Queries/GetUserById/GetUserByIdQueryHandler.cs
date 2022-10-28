@@ -19,7 +19,7 @@ namespace DevFreela.Application.Queries.GetUserById
         {
             var user = await _userRepository.GetUserByIdAsync(request.Id);
             if (user == null) { return null; }
-            return new UserViewModel(user.FullName, user.Email, user.Birthdate, user.Active);
+            return new UserViewModel(user.FullName, user.Email, user.Birthdate, user.Active, user.Role);
         }
     }
 }
