@@ -29,7 +29,7 @@ namespace DevFreela.UnitTests.Application.Commands
             await deleteProjectCommandHandler.Handle(deleteProjectCommand, new System.Threading.CancellationToken());
 
             // Assert
-            Assert.Equal(project.Status, DevFreela.Core.Enums.ProjectStatusEnum.Cancelled);
+            Assert.Equal(DevFreela.Core.Enums.ProjectStatusEnum.Cancelled, project.Status);
         }
     }
 }
