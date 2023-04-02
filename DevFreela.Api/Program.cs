@@ -73,7 +73,8 @@ builder.Services.AddMediatR(typeof(CreateProjectCommand));
 
 
 var connectionString = builder.Configuration.GetConnectionString("DevFreelaCs");
-builder.Services.AddDbContext<DevFreelaDbContext>(options => options.UseSqlServer(connectionString));
+var serverVersion = ServerVersion.AutoDetect(connectionString);
+builder.Services.AddDbContext<DevFreelaDbContext>(options => options.UseMySql(connectionString, serverVersion));
 
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
