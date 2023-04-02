@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DevFreela.Application.Commands.FinishProject;
 using DevFreela.Core.Entities;
 using DevFreela.Core.Repositories;
+using DevFreela.Core.Services;
 using Moq;
 using Xunit;
 
@@ -16,9 +17,10 @@ namespace DevFreela.UnitTests.Application.Commands
         public async Task IdProject_Executed_ProjectStatusEqualFinished()
         {
             // Arrange
-            var finishProjectCommand = new FinishProjectCommand(1);
+            var finishProjectCommand = new FinishProjectCommand();
             var projectRepositoryMock = new Mock<IProjectRepository>();
-            var finishProjectCommandHandler = new FinishProjectCommandHandler(projectRepositoryMock.Object);
+            var paymentServiceMock = new Mock<IPaymentServices>();
+            var finishProjectCommandHandler = new FinishProjectCommandHandler(projectRepositoryMock.Object, paymentServiceMock.Object);
             projectRepositoryMock.Setup(pr => pr.FinishProjectAsync(It.IsAny<Project>()));
 
             // Necessario para verificar com FinishProjectAsync
@@ -32,7 +34,7 @@ namespace DevFreela.UnitTests.Application.Commands
             await finishProjectCommandHandler.Handle(finishProjectCommand, new System.Threading.CancellationToken());
 
             // Assert
-            Assert.Equal(project.Status, DevFreela.Core.Enums.ProjectStatusEnum.Finished);
+            Assert.Equal(DevFreela.Core.Enums.ProjectStatusEnum.Finished, project.Status);
         }
     }
 }

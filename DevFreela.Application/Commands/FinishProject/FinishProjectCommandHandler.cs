@@ -7,14 +7,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DevFreela.Application.Commands.FinishProject
 {
-    public class FinishProjectCommandHandler : IRequestHandler<FinishProjectCommand, Unit>
+    public class FinishProjectCommandHandler : IRequestHandler<FinishProjectCommand, bool>
     {
        private readonly IProjectRepository _projectRepository;
        private readonly IPaymentServices _paymentServices;
 
-        public FinishProjectCommandHandler(IProjectRepository projectRepository)
+        public FinishProjectCommandHandler(IProjectRepository projectRepository, IPaymentServices paymentServices)
         {
             _projectRepository = projectRepository;
+            _paymentServices = paymentServices;
         }
 
         public async Task<bool> Handle(FinishProjectCommand request, CancellationToken cancellationToken)
