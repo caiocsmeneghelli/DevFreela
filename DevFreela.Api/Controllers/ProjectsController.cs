@@ -101,10 +101,15 @@ namespace DevFreela.Api.Controllers
         // api/projects/1/finish
         [HttpPut("{id}/finish")]
         [Authorize(Roles = "client")]
-        public async Task<IActionResult> Finish(int id)
+        public async Task<IActionResult> Finish(int id, [FromBody] FinishProjectCommand command)
         {
-            var inputModel = new FinishProjectCommand(id);
-            await _mediator.Send(inputModel);
+            command.Id = id;
+            var result = await _mediator.Send(command);
+
+            if (!result)
+            {
+                return BadRequest("Não foi possivel finalizar o projeto.");
+            }
             return NoContent();
         }
     }

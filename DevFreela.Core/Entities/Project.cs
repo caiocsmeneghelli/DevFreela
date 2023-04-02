@@ -60,5 +60,14 @@ namespace DevFreela.Core.Entities
             Description = description;
             TotalCost = totalCost;
         }
+
+        public void SetPaymentPending()
+        {
+            if(Status == ProjectStatusEnum.Finished)
+            {
+                Status = ProjectStatusEnum.PaymentPending;
+                FinishedAt = null;
+            }
+        }
     }
 }
