@@ -70,7 +70,7 @@ builder.Services.AddSwaggerGen(c => {
 });
 
 builder.Services.AddMediatR(typeof(CreateProjectCommand));
-
+builder.Services.AddHttpClient();
 
 var connectionString = builder.Configuration.GetConnectionString("DevFreelaCs");
 var serverVersion = ServerVersion.AutoDetect(connectionString);
