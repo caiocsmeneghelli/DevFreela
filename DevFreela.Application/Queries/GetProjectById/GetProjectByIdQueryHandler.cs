@@ -26,8 +26,8 @@ namespace DevFreela.Application.Queries.GetProjectById
                 project.StartedAt,
                 project.FinishedAt,
                 project.TotalCost,
-                project.Client.FullName,
-                project.Freelancer.FullName
+                project.Client != null ? project.Client.FullName : "",
+                project.Freelancer != null ? project.Freelancer.FullName : ""
             );
         }
     }
