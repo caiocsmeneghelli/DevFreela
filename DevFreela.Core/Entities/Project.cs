@@ -55,7 +55,8 @@ namespace DevFreela.Core.Entities
                 FinishedAt = DateTime.Now;
             }
         }
-        public void Update(string title, string description, decimal totalCost){
+        public void Update(string title, string description, decimal totalCost)
+        {
             Title = title;
             Description = description;
             TotalCost = totalCost;
@@ -63,11 +64,8 @@ namespace DevFreela.Core.Entities
 
         public void SetPaymentPending()
         {
-            if(Status == ProjectStatusEnum.Finished)
-            {
-                Status = ProjectStatusEnum.PaymentPending;
-                FinishedAt = null;
-            }
+            Status = ProjectStatusEnum.PaymentPending;
+            FinishedAt = null;
         }
     }
 }
