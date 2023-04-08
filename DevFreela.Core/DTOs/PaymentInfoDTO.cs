@@ -13,7 +13,7 @@ namespace DevFreela.Core.DTOs
             IdProject = id;
             CreditCardNumber = creditCardNumber;
             Cvv = cvv;
-            ExpiresAt = expiresAt;
+            ExpireAt = expiresAt;
             FullName = fullName;
             Amount = 0;
         }
@@ -21,7 +21,7 @@ namespace DevFreela.Core.DTOs
         public int IdProject { get; private set; }
         public string CreditCardNumber { get; private set; }
         public string Cvv { get; private set; }
-        public string ExpiresAt { get; private set; }
+        public string ExpireAt { get; private set; }
         public string FullName { get; private set; }
         public decimal Amount { get; set; }
     }
