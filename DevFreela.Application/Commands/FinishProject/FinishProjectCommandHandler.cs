@@ -9,8 +9,8 @@ namespace DevFreela.Application.Commands.FinishProject
 {
     public class FinishProjectCommandHandler : IRequestHandler<FinishProjectCommand, bool>
     {
-       private readonly IProjectRepository _projectRepository;
-       private readonly IPaymentServices _paymentServices;
+        private readonly IProjectRepository _projectRepository;
+        private readonly IPaymentServices _paymentServices;
 
         public FinishProjectCommandHandler(IProjectRepository projectRepository, IPaymentServices paymentServices)
         {
@@ -23,18 +23,16 @@ namespace DevFreela.Application.Commands.FinishProject
             var project = await _projectRepository.GetByIdAsync(request.Id);
             if (project == null)
                 return false;
-            project.Finish();
 
             var paymentInfo = new PaymentInfoDTO(request.Id, request.CreditCardNumber,
                 request.Cvv, request.ExpiresAt, request.FullName);
-            var result = await _paymentServices.ProcessPayment(paymentInfo);
+            _paymentServices.ProcessPayment(paymentInfo);
 
-            if (!result)
-                project.SetPaymentPending();
+            project.SetPaymentPending();
 
             await _projectRepository.SaveChangesAsync();
 
-            return result;
+            return true;
         }
     }
 }
