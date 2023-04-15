@@ -108,7 +108,7 @@ namespace DevFreela.Api.Controllers
             {
                 return BadRequest("Não foi possivel finalizar o projeto.");
             }
-            return NoContent();
+            return Accepted();
         }
     }
 }
