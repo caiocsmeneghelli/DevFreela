@@ -19,6 +19,7 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using DevFreela.Infrastructure.PaymentServices;
 using DevFreela.Infrastructure.MessageBus;
+using DevFreela.Application.Consumers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,7 +85,7 @@ builder.Services.AddScoped<IProjectCommentRepository, ProjectCommentRepository>(
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPaymentServices, PaymentServices>();
 builder.Services.AddScoped<IMessageBusService, MessageBusService>();
-
+builder.Services.AddHostedService<PaymentApprovedConsumer>();
 
 builder.Services.Configure<OpeningTimeOption>(builder.Configuration.GetSection("OpeningTime"));
 
